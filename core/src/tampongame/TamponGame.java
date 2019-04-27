@@ -1,4 +1,4 @@
-package com.mygdx.tampongame;
+package tampongame;
 
 import Screens.MenuScreen;
 
