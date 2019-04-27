@@ -1,4 +1,4 @@
-package tampongame;
+package com.mygdx.tampongame;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;

@@ -1,4 +1,4 @@
-package tampongame;
+package com.mygdx.tampongame;
 
 import com.mygdx.baseactor.Tampon;
 import com.mygdx.baseactor.Whirlpool;
