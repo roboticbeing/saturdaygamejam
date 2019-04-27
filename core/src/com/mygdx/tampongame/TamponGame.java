@@ -17,4 +17,6 @@ public class TamponGame extends GameBeta {
     public void update(float deltaTime) {
         // add later
     }
+
+
 }
