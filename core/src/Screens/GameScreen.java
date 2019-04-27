@@ -5,7 +5,7 @@ import com.badlogic.gdx.Gdx;
 import GameWorld.GameWorld;
 import GameWorld.GameRenderer;
 
-public class GameScreen implements Screen {
+public class GameScreen extends BaseScreen{
 
     private GameWorld world;
     private GameRenderer renderer;
