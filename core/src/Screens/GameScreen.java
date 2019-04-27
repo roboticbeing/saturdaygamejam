@@ -22,7 +22,7 @@ public class GameScreen extends BaseScreen {
         whirlpools = new Whirlpool[1];
 
         for (int i=0;i<whirlpools.length;i++){
-            whirlpools[i]= new Whirlpool(960,540,10000,mainStage);
+            whirlpools[i]= new Whirlpool(960,540,50000,mainStage);
         }
 
         tampon = new Tampon(0,0,mainStage);
@@ -33,9 +33,10 @@ public class GameScreen extends BaseScreen {
 
 
         for (int i=0;i<whirlpools.length;i++) {
-
-            float force =(float)( -0.6 * tampon.getWeight() * whirlpools[i].getWeight() / (Math.pow((whirlpools[i].getY() - tampon.getY()),2) + Math.pow((whirlpools[i].getX() - tampon.getX()),2)));
-            float theta = (float)Math.acos((whirlpools[i].getX() - tampon.getX())/(Math.pow((whirlpools[i].getY() - tampon.getY()),2) + Math.pow((whirlpools[i].getX() - tampon.getX()),2)));
+            //float temp = (float)((whirlpools[i].getX() - tampon.getX())/(Math.pow((whirlpools[i].getY() - tampon.getY()),2) + Math.pow((whirlpools[i].getX() - tampon.getX()),2)));
+           // Gdx.app.log("acos arg",temp+"");
+            float force =(float)( 0.6 * tampon.getWeight() * whirlpools[i].getWeight() / (Math.pow((whirlpools[i].getY() - tampon.getY()),2) + Math.pow((whirlpools[i].getX() - tampon.getX()),2)));
+            float theta = (float)Math.acos((whirlpools[i].getX() - tampon.getX())/Math.sqrt((Math.pow((whirlpools[i].getY() - tampon.getY()),2) + Math.pow((whirlpools[i].getX() - tampon.getX()),2))));
 
             x_force = (float)( x_force + force*Math.cos(theta));
             Gdx.app.log("WhirlPool#",i+"");
@@ -50,8 +51,8 @@ public class GameScreen extends BaseScreen {
     public float CalculateAccely(){
         float y_force = 0;
         for (int i=0;i<whirlpools.length;i++) {
-            float force =(float)(- 0.6 * tampon.getWeight() * whirlpools[i].getWeight() / (Math.pow((whirlpools[i].getY() - tampon.getY()),2) + Math.pow((whirlpools[i].getX() - tampon.getX()),2)));
-            float theta = (float)Math.asin((whirlpools[i].getY() - tampon.getY())/(Math.pow((whirlpools[i].getY() - tampon.getY()),2) + Math.pow((whirlpools[i].getX() - tampon.getX()),2)));
+            float force =(float)( 0.6 * tampon.getWeight() * whirlpools[i].getWeight() / (Math.pow((whirlpools[i].getY() - tampon.getY()),2) + Math.pow((whirlpools[i].getX() - tampon.getX()),2)));
+            float theta = (float)Math.asin((whirlpools[i].getY() - tampon.getY())/Math.sqrt((Math.pow((whirlpools[i].getY() - tampon.getY()),2) + Math.pow((whirlpools[i].getX() - tampon.getX()),2))));
 
         y_force = (float)( y_force + force*Math.sin(theta));
     }
