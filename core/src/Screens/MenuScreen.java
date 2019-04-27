@@ -12,7 +12,7 @@ public class MenuScreen extends BaseScreen {
     }
 
     public void update(float dt) {
-        if (Gdx.input.isKeyPressed(Keys.S))
+        if (Gdx.input.isKeyPressed(Keys.X))
             TamponGame.setActiveScreen(new GameScreen());
     }
 }
