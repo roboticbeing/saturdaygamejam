@@ -1,5 +1,4 @@
 package tampongame;
-
 import Screens.MenuScreen;
 
 public class TamponGame extends BaseGame {

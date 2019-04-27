@@ -9,12 +9,13 @@ public class Tampon extends BaseActor {
     private float weight = 1; //used for physics
     private float Vx = 0;
     private float Vy = 0;
+
     public Tampon(float x, float y, Stage stage) {
 
         super(x, y, stage);
         String[] fileNames = {"tampon-1.png", "tampon-2.png", "tampon-3.png", "tampon-2.png"};
         loadAnimationFromFiles(fileNames, 0.5f, true);
-        Gdx.app.log("Tampon Constructor","Called");
+        Gdx.app.log("constructor called", "constructor called");
     }
 
     public void act(float deltaTime) {
@@ -22,22 +23,22 @@ public class Tampon extends BaseActor {
 
         this.setX(this.getX()+Vx);
         this.setY(this.getY()+Vy);
-
+        float speedChange = 0.5f;
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            Vx=(float)(Vx-.1);
+            Vx=(float)(Vx-speedChange);
             //this.setX(this.getX() - 10);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            Vx=(float)(Vx+.1);
-           // this.setX(this.getX() + 10);
+            Vx=(float)(Vx+speedChange);
+            // this.setX(this.getX() + 10);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
             //this.setY(this.getY() + 10);
-            Vy=(float)(Vy+.1);
+            Vy=(float)(Vy+speedChange);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-           // this.setY(this.getY() - 10);
-            Vy=(float)(Vy-.1);
+            // this.setY(this.getY() - 10);
+            Vy=(float)(Vy-speedChange);
         }
     }
 
@@ -45,18 +46,9 @@ public class Tampon extends BaseActor {
 
         return weight;
     }
-
     public float getSpeedx(){
         return Vx;
 
-    }
-
-    public void adjustSpeedx(float dVx){
-        Vx = Vx+dVx;
-    }
-
-    public void adjustSpeedy(float dVy){
-        Vy = Vy+dVy;
     }
 
     public float getSpeedy(){
@@ -68,6 +60,14 @@ public class Tampon extends BaseActor {
     }
 
     public void setSpeedy(float Speedy) {
-        Vx = Speedy;
+        Vy = Speedy;
+    }
+
+    public void adjustSpeedx(float dVx){
+        Vx = Vx+dVx;
+    }
+
+    public void adjustSpeedy(float dVy){
+        Vy = Vy+dVy;
     }
 }

@@ -1,47 +1,67 @@
 package Screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
+import com.badlogic.gdx.math.Rectangle;
+import com.mygdx.baseactor.BaseActor;
 import com.mygdx.baseactor.Tampon;
 import com.mygdx.baseactor.Whirlpool;
+
+import tampongame.TamponGame;
 
 
 public class GameScreen extends BaseScreen {
 
     private Whirlpool[] whirlpools;
+    private Rectangle[] whirlpoolsRects;
     private Tampon tampon;
+    private Rectangle tamponRect;
+    private BaseActor trash;
+    private Rectangle trashRect;
+    private BaseActor youWin;
     private boolean win;
+    private final int NUM_WHIRLPOOLS = 6;
 
 
     public GameScreen() {
-        Gdx.app.log("GameScreen", "Constructor");
+        Gdx.app.log("GameScreen", "Attached");
+        Gdx.app.log("GameScreen", "Initialize");
     }
     public void initialize()
     {
+        win = false;
+
         //TODO: Pull specific whirlpool quantity and location from level data
-        whirlpools = new Whirlpool[4];
+        whirlpools = new Whirlpool[NUM_WHIRLPOOLS];
+        whirlpoolsRects = new Rectangle[NUM_WHIRLPOOLS];
 
         for (int i=0;i<whirlpools.length;i++){
-            whirlpools[i]= new Whirlpool(960,540,50000,mainStage);
+            whirlpools[i]= new Whirlpool((float)Math.random()*(mainStage.getWidth() - 196),(float)Math.random()*(mainStage.getHeight() - 274),10000,mainStage);
+            whirlpoolsRects[i] = new Rectangle(whirlpools[i].getX() + 100, whirlpools[i].getY() + 100, whirlpools[i].getWidth() / 6, whirlpools[i].getHeight() / 6);
         }
 
-        tampon = new Tampon(0,0,mainStage);
+        trash = new BaseActor(0, 0, mainStage);
+        trash.loadTexture("trash.png");
+        trashRect = new Rectangle(0, 0, trash.getWidth() / 3, trash.getHeight() / 3);
+
+        tampon = new Tampon(960,540, mainStage);
+        tamponRect = new Rectangle(tampon.getX(), tampon.getY(), tampon.getWidth(), tampon.getHeight());
+
+        youWin = new BaseActor(0, 0, mainStage);
+        youWin.loadTexture("win.png");
+        youWin.setSize(mainStage.getWidth(), mainStage.getHeight());
+        youWin.setVisible(false);
     }
 
     public float CalculateAccelx(){
         float x_force=0;
 
 
-        for (int i=0;i<whirlpools.length;i++) {
-            //float temp = (float)((whirlpools[i].getX() - tampon.getX())/(Math.pow((whirlpools[i].getY() - tampon.getY()),2) + Math.pow((whirlpools[i].getX() - tampon.getX()),2)));
-           // Gdx.app.log("acos arg",temp+"");
+        for (int i=0;i<whirlpools.length -1;i++) {
+
             float force =(float)( 0.6 * tampon.getWeight() * whirlpools[i].getWeight() / (Math.pow((whirlpools[i].getY() - tampon.getY()),2) + Math.pow((whirlpools[i].getX() - tampon.getX()),2)));
             float theta = (float)Math.acos((whirlpools[i].getX() - tampon.getX())/Math.sqrt((Math.pow((whirlpools[i].getY() - tampon.getY()),2) + Math.pow((whirlpools[i].getX() - tampon.getX()),2))));
 
             x_force = (float)( x_force + force*Math.cos(theta));
-            Gdx.app.log("WhirlPool#",i+"");
-            Gdx.app.log("Calculate force",force+"");
-            Gdx.app.log("Calculate theta",theta+"");
         }
         Gdx.app.log("Calculate x Accel",x_force+"");
         return x_force/tampon.getWeight();
@@ -50,11 +70,11 @@ public class GameScreen extends BaseScreen {
     };
     public float CalculateAccely(){
         float y_force = 0;
-        for (int i=0;i<whirlpools.length;i++) {
+        for (int i=0;i<whirlpools.length -1;i++) {
             float force =(float)( 0.6 * tampon.getWeight() * whirlpools[i].getWeight() / (Math.pow((whirlpools[i].getY() - tampon.getY()),2) + Math.pow((whirlpools[i].getX() - tampon.getX()),2)));
             float theta = (float)Math.asin((whirlpools[i].getY() - tampon.getY())/Math.sqrt((Math.pow((whirlpools[i].getY() - tampon.getY()),2) + Math.pow((whirlpools[i].getX() - tampon.getX()),2))));
 
-        y_force = (float)( y_force + force*Math.sin(theta));
+            y_force = (float)( y_force + force*Math.sin(theta));
     }
         Gdx.app.log("Calculate y Accel",y_force+"");
         return y_force/tampon.getWeight();
@@ -64,23 +84,34 @@ public class GameScreen extends BaseScreen {
 
     @Override
     public void update(float dt) {
+        float dVx = CalculateAccelx();
+        float dVy = CalculateAccely();
 
-       // tampon.setSpeedx(10);
-       // tampon.setX(tampon.getX()+tampon.getSpeedx());
-       float dVx = CalculateAccelx();
-       float dVy = CalculateAccely();
+        tampon.adjustSpeedx(dVx);
+        tampon.adjustSpeedy(dVy);
 
-       tampon.adjustSpeedx(dVx);
-       tampon.adjustSpeedy(dVy);
-        //Gdx.app.log("Calculate x speed",tampon.getSpeedx()+"");
-       //tampon.setSpeedy(tampon.getSpeedy()+dVy);
-       // Gdx.app.log("Calculate y speed",tampon.getSpeedy()+"");
+            tamponRect.setX(tampon.getX());
 
-     //  tampon.setX(tampon.getX()+tampon.getSpeedx());
+            tamponRect.setY(tampon.getY());
+            Gdx.app.log("Calculate x pos",tampon.getX()+"");
+            Gdx.app.log("Calculate y pos",tampon.getY()+"");
 
-       //tampon.setY(tampon.getY()+tampon.getSpeedy());
-      //  Gdx.app.log("Calculate x pos",tampon.getX()+"");
-       // Gdx.app.log("Calculate y pos",tampon.getY()+"");
+            for (int i = 0; i < whirlpools.length; i++) {
+                if (tamponRect.overlaps(whirlpoolsRects[i])) {
+                    TamponGame.setActiveScreen(new MenuScreen());
+                }
+            }
+
+            if (tampon.getX() < 0 || tampon.getX() >= mainStage.getWidth() - tampon.getWidth()) {
+                tampon.setSpeedx(tampon.getSpeedx() * -1);
+            }
+            if (tampon.getY() < 0 || tampon.getY() >= mainStage.getHeight() - tampon.getHeight()) {
+                tampon.setSpeedy(tampon.getSpeedy() * -1);
+            }
+        if (tamponRect.overlaps(trashRect)) {
+            win = true;
+            youWin.setVisible(true);
+        }
     }
 
 }
