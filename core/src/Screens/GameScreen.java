@@ -27,7 +27,7 @@ public class GameScreen extends BaseScreen {
         tampon = new Tampon(x,y,mainStage);
     }
 
-    public float CalculateForcex(){
+    public float CalculateAccelx(){
         float x_force=0;
 
 
@@ -38,19 +38,32 @@ public class GameScreen extends BaseScreen {
 
             x_force = (float)( x_force + force*Math.cos(theta));
         }
-            return x_force;
+            return x_force/tampon.getWeight();
 
     };
-    public float CalculateForcey(){
+    public float CalculateAccely(){
+        float y_force = 0;
+        for (int i=0;i<10;i++) {
+            float force = -0.6 * tampon.getWeight() * whirlpools[i].getWeight / (Math.pow((whirlpools[i].getOriginY() - tampon.getOriginY()),2) + Math.pow((whirlpools[i].getOriginX() - tampon.getOriginX()),2));
+            float theta = (float)Math.atan((whirlpools[i].getOriginY() - tampon.getOriginY())/(whirlpools[i].getOriginX() - tampon.getOriginX()));
 
-        return y_force;
+        y_force = (float)( y_force + force*Math.sin(theta));
+    }
+        return y_force/tampon.getWeight();
 
-    };
+    }
 
 
     @Override
     public void update(float dt) {
 
+       float dVx = CalculateAccelx();
+       float dVy = CalculateAccely();
+
+       tampon.setSpeedx(tampon.getSpeedx+dVx);
+       tampon.setSpeedy(tampon.getSpeedy+dVy);
+
+       tampon.setOriginX();
     }
 
 
