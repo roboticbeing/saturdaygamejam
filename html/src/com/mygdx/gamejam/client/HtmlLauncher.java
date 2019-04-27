@@ -3,7 +3,8 @@ package com.mygdx.gamejam.client;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;
-import com.mygdx.gamejam.SaturdayGameJam;
+
+import tampongame.TamponGame;
 
 public class HtmlLauncher extends GwtApplication {
 
@@ -46,6 +47,6 @@ public class HtmlLauncher extends GwtApplication {
 
         @Override
         public ApplicationListener createApplicationListener () {
-                return new SaturdayGameJam();
+                return new TamponGame();
         }
 }
