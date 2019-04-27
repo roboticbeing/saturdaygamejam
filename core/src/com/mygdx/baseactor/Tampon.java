@@ -14,22 +14,30 @@ public class Tampon extends BaseActor {
         super(x, y, stage);
         String[] fileNames = {"tampon-1.png", "tampon-2.png", "tampon-3.png", "tampon-2.png"};
         loadAnimationFromFiles(fileNames, 0.5f, true);
+        Gdx.app.log("Tampon Constructor","Called");
     }
 
     public void act(float deltaTime) {
         super.act(deltaTime);
 
+        this.setX(this.getX()+Vx);
+        this.setY(this.getY()+Vy);
+
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            this.setX(this.getX() - 10);
+            Vx=(float)(Vx-.1);
+            //this.setX(this.getX() - 10);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            this.setX(this.getX() + 10);
+            Vx=(float)(Vx+.1);
+           // this.setX(this.getX() + 10);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            this.setY(this.getY() + 10);
+            //this.setY(this.getY() + 10);
+            Vy=(float)(Vy+.1);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            this.setY(this.getY() - 10);
+           // this.setY(this.getY() - 10);
+            Vy=(float)(Vy-.1);
         }
     }
 
@@ -41,6 +49,14 @@ public class Tampon extends BaseActor {
     public float getSpeedx(){
         return Vx;
 
+    }
+
+    public void adjustSpeedx(float dVx){
+        Vx = Vx+dVx;
+    }
+
+    public void adjustSpeedy(float dVy){
+        Vy = Vy+dVy;
     }
 
     public float getSpeedy(){

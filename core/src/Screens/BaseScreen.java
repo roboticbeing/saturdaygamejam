@@ -23,7 +23,8 @@ public abstract class BaseScreen implements Screen {
     public abstract void update(float dt);
 
     public void render(float dt)
-    {
+    {   Gdx.app.log("BaseScreen","Render");
+
         uiStage.act(dt);
         mainStage.act(dt);
         update(dt);
