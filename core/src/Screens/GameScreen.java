@@ -1,11 +1,14 @@
 package Screens;
 
+import com.badlogic.gdx.Audio;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.baseactor.BaseActor;
 import com.mygdx.baseactor.Tampon;
 import com.mygdx.baseactor.Whirlpool;
 
+import tampongame.AudioStage;
 import tampongame.TamponGame;
 
 
@@ -20,6 +23,7 @@ public class GameScreen extends BaseScreen {
     private BaseActor youWin;
     private boolean win;
     private final int NUM_WHIRLPOOLS = 6;
+    private AudioStage audio;
 
 
     public GameScreen() {
@@ -29,6 +33,7 @@ public class GameScreen extends BaseScreen {
     public void initialize()
     {
         win = false;
+        audio = new AudioStage();
 
         //TODO: Pull specific whirlpool quantity and location from level data
         whirlpools = new Whirlpool[NUM_WHIRLPOOLS];
@@ -98,19 +103,23 @@ public class GameScreen extends BaseScreen {
 
             for (int i = 0; i < whirlpools.length; i++) {
                 if (tamponRect.overlaps(whirlpoolsRects[i])) {
+                    audio.flush();
                     TamponGame.setActiveScreen(new MenuScreen());
                 }
             }
 
-            if (tampon.getX() < 0 || tampon.getX() >= mainStage.getWidth() - tampon.getWidth()) {
+            if (tampon.getX() <= 0 || tampon.getX() >= mainStage.getWidth() - tampon.getWidth()) {
                 tampon.setSpeedx(tampon.getSpeedx() * -1);
+                audio.bounce();
             }
-            if (tampon.getY() < 0 || tampon.getY() >= mainStage.getHeight() - tampon.getHeight()) {
+            if (tampon.getY() <= 0 || tampon.getY() >= mainStage.getHeight() - tampon.getHeight()) {
                 tampon.setSpeedy(tampon.getSpeedy() * -1);
+                audio.bounce();
             }
         if (tamponRect.overlaps(trashRect)) {
-            win = true;
-            youWin.setVisible(true);
+            audio.splat();
+//            win = true;
+            TamponGame.setActiveScreen(new WinScreen());
         }
     }
 
