@@ -12,7 +12,7 @@ public class MenuScreen extends BaseScreen {
 
     @Override
     public void show() {
-        
+
     }
 
     @Override
