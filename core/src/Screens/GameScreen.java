@@ -1,67 +1,69 @@
 package Screens;
 
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Gdx;
-import GameWorld.GameWorld;
-import GameWorld.GameRenderer;
+import com.mygdx.baseactor.Tampon;
+import com.mygdx.baseactor.Whirlpool;
+
 
 public class GameScreen extends BaseScreen {
 
-    private GameWorld world;
-    private GameRenderer renderer;
+    private Whirlpool[] whirlpools;
+    private Tampon tampon;
+    private boolean win;
+
 
     public GameScreen() {
+        initialize();
         Gdx.app.log("GameScreen", "Attached");
-        world = new GameWorld();
-        renderer = new GameRenderer();
-    }
-
-    @Override
-    public void initialize() {
 
     }
+    public void initialize()
+    {
+        //TODO: Pull specific whirlpool quantity and location from level data
+        for (int i=0;i<10;i++){
+            whirlpools[i]= new Whirlpool(x,y,mainStage);
+        }
+
+        tampon = new Tampon(x,y,mainStage);
+    }
+
+    public float CalculateForcex(){
+        float x_force=0;
+
+
+        for (int i=0;i<10;i++) {
+
+            float force = -0.6 * tampon.getWeight() * whirlpools[i].getWeight / (Math.pow((whirlpools[i].getOriginY() - tampon.getOriginY()),2) + Math.pow((whirlpools[i].getOriginX() - tampon.getOriginX()),2));
+            float theta = (float)Math.atan((whirlpools[i].getOriginY() - tampon.getOriginY())/(whirlpools[i].getOriginX() - tampon.getOriginX()));
+
+            x_force = (float)( x_force + force*Math.cos(theta));
+        }
+            return x_force;
+
+    };
+    public float CalculateForcey(){
+
+        return y_force;
+
+    };
+
 
     @Override
     public void update(float dt) {
 
     }
 
-    @Override
-    public void show() {
-        Gdx.app.log("GameScreen", "show called");
+
+    /*
+    private Tampon tampon;
+    private boolean win;
+    public void initialize()
+    {
+// code identical to StarfishCollector initialize method
     }
-
-    @Override
-    public void render(float delta) {
-        Gdx.app.log("GameScreen", "Render");
-        Gdx.app.log("GameScreen FPS", (1/delta) + "");
-        world.update(delta);
-        renderer.render();
+    public void update(float dt)
+    {
+// code identical to StarfishCollector update method
     }
-
-    @Override
-    public void resize(int width, int height) {
-        Gdx.app.log("GameScreen", "resizing");
-
-    }
-
-    @Override
-    public void pause() {
-        Gdx.app.log("GameScreen", "pause called");
-    }
-
-    @Override
-    public void resume() {
-        Gdx.app.log("GameScreen", "resume called");
-    }
-
-    @Override
-    public void hide() {
-        Gdx.app.log("GameScreen", "hide called");
-    }
-
-    @Override
-    public void dispose() {
-
-    }
+    */
 }
