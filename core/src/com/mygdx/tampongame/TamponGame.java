@@ -1,20 +1,10 @@
 package com.mygdx.tampongame;
 
-import com.mygdx.baseactor.Tampon;
-import com.mygdx.baseactor.Whirlpool;
+import Screens.MenuScreen;
 
-public class TamponGame extends GameBeta {
-    Whirlpool whirlpool;
-    Tampon tampon;
-
+public class TamponGame extends BaseGame {
     @Override
-    public void initialize() {
-        whirlpool = new Whirlpool(40, 40, mainStage);
-//        tampon = new Tampon(300, 300, mainStage);
-    }
-
-    @Override
-    public void update(float deltaTime) {
-        // add later
+    public void create() {
+        setActiveScreen(new MenuScreen());
     }
 }
