@@ -1,4 +1,6 @@
 package Screens;
 
-public class BaseScreen {
+import com.badlogic.gdx.Screen;
+
+public abstract class BaseScreen implements Screen {
 }
