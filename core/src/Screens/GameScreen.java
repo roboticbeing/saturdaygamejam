@@ -19,7 +19,7 @@ public class GameScreen extends BaseScreen {
     public void initialize()
     {
         //TODO: Pull specific whirlpool quantity and location from level data
-        whirlpools = new Whirlpool[1];
+        whirlpools = new Whirlpool[4];
 
         for (int i=0;i<whirlpools.length;i++){
             whirlpools[i]= new Whirlpool(960,540,50000,mainStage);
