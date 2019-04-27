@@ -21,10 +21,10 @@ public class GameScreen extends BaseScreen {
     {
         //TODO: Pull specific whirlpool quantity and location from level data
         for (int i=0;i<10;i++){
-            whirlpools[i]= new Whirlpool(x,y,mainStage);
+            whirlpools[i]= new Whirlpool((float)Math.random()*800,(float)Math.random()*600,10000,mainStage);
         }
 
-        tampon = new Tampon(x,y,mainStage);
+        tampon = new Tampon(400,300,mainStage);
     }
 
     public float CalculateAccelx(){
@@ -33,7 +33,7 @@ public class GameScreen extends BaseScreen {
 
         for (int i=0;i<10;i++) {
 
-            float force = -0.6 * tampon.getWeight() * whirlpools[i].getWeight / (Math.pow((whirlpools[i].getOriginY() - tampon.getOriginY()),2) + Math.pow((whirlpools[i].getOriginX() - tampon.getOriginX()),2));
+            float force = (float)(-0.6 * tampon.getWeight() * whirlpools[i].getWeight() / (Math.pow((whirlpools[i].getOriginY() - tampon.getOriginY()),2) + Math.pow((whirlpools[i].getOriginX() - tampon.getOriginX()),2)));
             float theta = (float)Math.atan((whirlpools[i].getOriginY() - tampon.getOriginY())/(whirlpools[i].getOriginX() - tampon.getOriginX()));
 
             x_force = (float)( x_force + force*Math.cos(theta));
@@ -44,7 +44,7 @@ public class GameScreen extends BaseScreen {
     public float CalculateAccely(){
         float y_force = 0;
         for (int i=0;i<10;i++) {
-            float force = -0.6 * tampon.getWeight() * whirlpools[i].getWeight / (Math.pow((whirlpools[i].getOriginY() - tampon.getOriginY()),2) + Math.pow((whirlpools[i].getOriginX() - tampon.getOriginX()),2));
+            float force =(float)( -0.6 * tampon.getWeight() * whirlpools[i].getWeight() / (Math.pow((whirlpools[i].getOriginY() - tampon.getOriginY()),2) + Math.pow((whirlpools[i].getOriginX() - tampon.getOriginX()),2)));
             float theta = (float)Math.atan((whirlpools[i].getOriginY() - tampon.getOriginY())/(whirlpools[i].getOriginX() - tampon.getOriginX()));
 
         y_force = (float)( y_force + force*Math.sin(theta));
@@ -60,23 +60,11 @@ public class GameScreen extends BaseScreen {
        float dVx = CalculateAccelx();
        float dVy = CalculateAccely();
 
-       tampon.setSpeedx(tampon.getSpeedx+dVx);
-       tampon.setSpeedy(tampon.getSpeedy+dVy);
+       tampon.setSpeedx(tampon.getSpeedx()+dVx);
+       tampon.setSpeedy(tampon.getSpeedy()+dVy);
 
-       tampon.setOriginX();
+       tampon.setOriginX(tampon.getOriginX()+tampon.getSpeedx());
+       tampon.setOriginY(tampon.getOriginY()+tampon.getSpeedy());
     }
 
-
-    /*
-    private Tampon tampon;
-    private boolean win;
-    public void initialize()
-    {
-// code identical to StarfishCollector initialize method
-    }
-    public void update(float dt)
-    {
-// code identical to StarfishCollector update method
-    }
-    */
 }
