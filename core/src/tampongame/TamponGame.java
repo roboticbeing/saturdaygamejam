@@ -10,7 +10,7 @@ public class TamponGame extends GameBeta {
     @Override
     public void initialize() {
         whirlpool = new Whirlpool(20, 20, mainStage);
-        tampon = new Tampon(300, 300, mainStage);
+//        tampon = new Tampon(300, 300, mainStage);
     }
 
     @Override
