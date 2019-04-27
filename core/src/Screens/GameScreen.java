@@ -2,18 +2,11 @@ package Screens;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Gdx;
-import GameWorld.GameWorld;
-import GameWorld.GameRenderer;
 
 public class GameScreen extends BaseScreen {
 
-    private GameWorld world;
-    private GameRenderer renderer;
-
     public GameScreen() {
         Gdx.app.log("GameScreen", "Attached");
-        world = new GameWorld();
-        renderer = new GameRenderer();
     }
 
     @Override
@@ -35,8 +28,6 @@ public class GameScreen extends BaseScreen {
     public void render(float delta) {
         Gdx.app.log("GameScreen", "Render");
         Gdx.app.log("GameScreen FPS", (1/delta) + "");
-        world.update(delta);
-        renderer.render();
     }
 
     @Override
