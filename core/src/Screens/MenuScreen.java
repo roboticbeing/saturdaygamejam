@@ -2,7 +2,7 @@ package Screens;
 
 import com.badlogic.gdx.Input.Keys;
 
-public abstract class MenuScreen extends BaseScreen {
+public class MenuScreen extends BaseScreen {
 
     public void initialize()
     {

@@ -5,7 +5,7 @@ import com.badlogic.gdx.Gdx;
 import GameWorld.GameWorld;
 import GameWorld.GameRenderer;
 
-public class GameScreen extends BaseScreen{
+public class GameScreen extends BaseScreen {
 
     private GameWorld world;
     private GameRenderer renderer;
@@ -14,6 +14,16 @@ public class GameScreen extends BaseScreen{
         Gdx.app.log("GameScreen", "Attached");
         world = new GameWorld();
         renderer = new GameRenderer();
+    }
+
+    @Override
+    public void initialize() {
+
+    }
+
+    @Override
+    public void update(float dt) {
+
     }
 
     @Override
