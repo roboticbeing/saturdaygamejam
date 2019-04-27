@@ -7,22 +7,16 @@ import com.mygdx.baseactor.BaseActor;
 import tampongame.TamponGame;
 
 public class MenuScreen extends BaseScreen {
-    BaseActor menu;
 
     @Override
     public void initialize() {
-        menu = new BaseActor(0, 0, mainStage);
-        menu.loadTexture("menu.png");
-        menu.setSize(1300, 800);
+        BaseActor menu = new BaseActor(0, 0, mainStage);
+        menu.loadTexture("menu2.png");
+        menu.setSize(mainStage.getWidth(), mainStage.getHeight());
     }
 
     public void update(float dt) {
-        if (Gdx.input.isKeyPressed(Keys.X)) {
-            Gdx.app.log("Menu Screen", "X pressed");
+        if (Gdx.input.isKeyPressed(Keys.X))
             TamponGame.setActiveScreen(new GameScreen());
-
-            //menu.remove();
-
-        }
     }
 }
